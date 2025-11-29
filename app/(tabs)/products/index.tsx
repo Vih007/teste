@@ -154,7 +154,7 @@ export default function ProductsScreen() {
               {
                 borderColor: themeColors.inputBorder,
                 backgroundColor: themeColors.inputBackground,
-                color: themeColors.detailLabel,
+                color: themeColors.detailInputText,
               },
             ]}
             placeholder="Filtros de Busca"

@@ -1,4 +1,4 @@
-// App/app/(drawer)/uaps/index.tsx
+// app/(drawer)/tools/index.tsx
 import React from 'react';
 import {
   StyleSheet,
@@ -13,18 +13,22 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Colors } from '@/constants/themes1';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useNavigation } from 'expo-router';
-import { AGROSYS_DATA } from '@/data/agrosys-data'; 
-import BottomNavButton from '@/components/BottomNavButton'; 
+import { AGROSYS_DATA } from '@/data/agrosys-data';
+import BottomNavButton from '@/components/BottomNavButton';
 
-const UAPListItem = ({ uap }: { uap: any }) => {
+const ToolListItem = ({ tool }: { tool: any }) => {
   const colorScheme = useColorScheme();
   const themeColors = Colors[colorScheme];
 
   const onPressDetails = () => {
+    // Note: Usamos 'Item' como fallback, mas o ideal é que a tela de detalhes 
+    // trate o objeto tool, mas como não temos mapeamento para 'Ferramenta' no details/[id].tsx,
+    // usaremos 'Produto' por enquanto.
+    // Para um funcionamento completo, 'details/[id].tsx' precisaria de um case para 'Ferramenta'
     router.push(
       {
         pathname: '/details/[id]',
-        params: { id: String(uap.id), type: 'UAP' },
+        params: { id: String(tool.id), type: 'Produto' }, // Requer ajustes em details/[id].tsx
       } as any,
     );
   };
@@ -46,7 +50,7 @@ const UAPListItem = ({ uap }: { uap: any }) => {
             { color: themeColors.detailLabel, fontWeight: 'bold' },
           ]}
         >
-          {uap.name}
+          {tool.name}
         </Text>
         <Text
           style={[
@@ -54,7 +58,7 @@ const UAPListItem = ({ uap }: { uap: any }) => {
             { color: themeColors.detailLabel },
           ]}
         >
-          Área: {uap.area} | Cultivo: {uap.cultivation}
+          Tipo: {tool.type} | Status: {tool.status}
         </Text>
         <Text
           style={[
@@ -62,7 +66,7 @@ const UAPListItem = ({ uap }: { uap: any }) => {
             { color: themeColors.detailLabel },
           ]}
         >
-          Responsável: {uap.responsible}
+          Última Manutenção: {tool.last_maintenance}
         </Text>
       </View>
       <TouchableOpacity style={styles.detailsButton} onPress={onPressDetails}>
@@ -81,7 +85,7 @@ const Header = ({ title }: { title: string }) => {
     <View
       style={[styles.header, { backgroundColor: themeColors.primary }]}
     >
-      <TouchableOpacity onPress={() => router.back()}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
         <Ionicons name="chevron-back" size={30} color={themeColors.headerText} />
       </TouchableOpacity>
       <Text
@@ -99,20 +103,20 @@ const Header = ({ title }: { title: string }) => {
   );
 };
 
-export default function UAPsScreen() {
+export default function ToolsScreen() {
   const colorScheme = useColorScheme();
   const themeColors = Colors[colorScheme];
-  const uaps = AGROSYS_DATA.uaps; 
+  const tools = AGROSYS_DATA.tools || []; // Acessa os dados de ferramentas
 
-  const navigateToUAPRegistration = () => {
-    router.push('/uaps/add' as any);
+  const navigateToToolRegistration = () => {
+    router.push('/tools/add' as any);
   };
 
   return (
     <SafeAreaView
       style={[styles.safeArea, { backgroundColor: themeColors.primary }]}
     >
-      <Header title="Gestão de UAPs" />
+      <Header title="Gestão de Ferramentas" />
       <View
         style={[
           styles.container,
@@ -125,7 +129,7 @@ export default function UAPsScreen() {
             { color: themeColors.primary },
           ]}
         >
-          Gestão de UAPs
+          Gestão de Ferramentas
         </Text>
         <Text
           style={[
@@ -133,7 +137,7 @@ export default function UAPsScreen() {
             { color: themeColors.subtleText },
           ]}
         >
-          Controle e Acompanhamento de UAPs
+          Controle e Acompanhamento de Ferramentas/Máquinas
         </Text>
 
         <View
@@ -154,7 +158,7 @@ export default function UAPsScreen() {
               {
                 borderColor: themeColors.inputBorder,
                 backgroundColor: themeColors.inputBackground,
-                color: themeColors.detailInputText, // CORRIGIDO PARA USAR detailInputText (PRETO)
+                color: themeColors.detailInputText, // Texto preto
               },
             ]}
             placeholder="Filtros de Busca"
@@ -178,16 +182,16 @@ export default function UAPsScreen() {
         </View>
 
         <ScrollView style={styles.listContainer}>
-          {uaps.map((uap: any) => (
-            <UAPListItem key={uap.id} uap={uap} />
+          {tools.map((tool: any) => (
+            <ToolListItem key={tool.id} tool={tool} />
           ))}
           <View style={{ height: 100 }} />
         </ScrollView>
       </View>
 
       <BottomNavButton
-        title="+ Cadastrar UAP"
-        onPress={navigateToUAPRegistration}
+        title="+ Cadastrar Ferramenta"
+        onPress={navigateToToolRegistration}
       />
     </SafeAreaView>
   );

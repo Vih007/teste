@@ -71,10 +71,10 @@ function CustomDrawerContent() {
         <DrawerItem name="Gestão de Insumos" href="/inputs" />
         <DrawerItem name="Gestão de UAPs" href="/uaps" />
 
-        {/* Rotas extras (se quiser implementar depois) */}
+        {/* Rotas extras (agora Tools entra na lista) */}
+        <DrawerItem name="Gestão de Ferramentas" href="/tools" />
         <DrawerItem name="Gestão de Colheitas" href="/harvests" />
         <DrawerItem name="Gestão de Vendas" href="/sales" />
-        <DrawerItem name="Gestão de Ferramentas" href="/tools" />
         <DrawerItem name="Meu Perfil" href="/profile" />
         <DrawerItem name="SAIR" href="/logout" />
       </View>
@@ -109,6 +109,8 @@ export default function DrawerLayout() {
         options={{ title: 'Gestão de Insumos' }}
       />
       <Drawer.Screen name="uaps" options={{ title: 'Gestão de UAPs' }} />
+      {/* NOVA TELA DE FERRAMENTAS */}
+      <Drawer.Screen name="tools" options={{ title: 'Gestão de Ferramentas' }} /> 
 
       <Drawer.Screen
         name="products/add"
@@ -121,6 +123,11 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="uaps/add"
         options={{ title: 'Cadastrar UAP', drawerLabel: () => null }}
+      />
+      {/* NOVA TELA DE CADASTRO DE FERRAMENTAS */}
+      <Drawer.Screen
+        name="tools/add"
+        options={{ title: 'Cadastrar Ferramenta', drawerLabel: () => null }}
       />
       <Drawer.Screen
         name="details/[id]"

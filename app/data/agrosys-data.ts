@@ -69,4 +69,25 @@ export const AGROSYS_DATA = {
       notes: 'Propriedade familiar, foco na produção orgânica.'
     },
   ],
+  // ADICIONANDO DADOS DE FERRAMENTAS (TOOLS)
+  tools: [
+    {
+      id: 'fer-301',
+      name: 'Trator MF 290',
+      type: 'Máquina Pesada',
+      status: 'Em Operação',
+      purchase_date: '10/01/2020',
+      last_maintenance: '05/11/2025',
+      notes: 'Troca de óleo e filtros realizada.',
+    },
+    {
+      id: 'fer-302',
+      name: 'Pulverizador Costal',
+      type: 'Implemento Manual',
+      status: 'Disponível',
+      purchase_date: '20/05/2024',
+      last_maintenance: 'N/A',
+      notes: 'Novo, armazenado em Galpão C.',
+    },
+  ],
 };
